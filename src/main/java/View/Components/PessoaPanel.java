@@ -4,6 +4,7 @@ import Controller.PessoaController;
 import Model.Pessoa;
 
 import javax.swing.*;
+import javax.swing.table.TableColumnModel; // Importe TableColumnModel
 import java.awt.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -27,9 +28,10 @@ public class PessoaPanel extends JPanel {
 
     private void setupTable() {
         tableModel = new GenericTableModel<>(
+                // Mantemos "ID" na lista de cabeçalhos para mapear o primeiro dado corretamente.
                 Arrays.asList("ID", "Nome", "CPF", "Data de Nascimento"),
                 p -> new Object[]{
-                        p.getId(),
+                        p.getId(), // O ID continua sendo o primeiro elemento dos dados
                         p.getNome(),
                         p.getCpf(),
                         p.getDataNascimento().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
@@ -38,6 +40,23 @@ public class PessoaPanel extends JPanel {
         table = new JTable(tableModel);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         add(new JScrollPane(table), BorderLayout.CENTER);
+
+        // --- Adição CRÍTICA: Oculta a coluna do ID após a criação da tabela ---
+        hideIdColumn();
+    }
+
+    /**
+     * Oculta a coluna "ID" da JTable.
+     * A coluna é removida da visualização, mas seus dados permanecem no TableModel,
+     * permitindo o acesso programático (ex: para exclusão ou edição).
+     */
+    private void hideIdColumn() {
+        // Verifica se a tabela tem colunas antes de tentar removê-las
+        if (table.getColumnModel().getColumnCount() > 0) {
+            TableColumnModel columnModel = table.getColumnModel();
+            // A coluna "ID" é a primeira, no índice 0
+            columnModel.removeColumn(columnModel.getColumn(0));
+        }
     }
 
     private void setupButtons() {
@@ -55,6 +74,7 @@ public class PessoaPanel extends JPanel {
         editButton.addActionListener(e -> {
             int selectedRow = table.getSelectedRow();
             if (selectedRow >= 0) {
+                // O ID ainda é acessado pela coluna 0 do tableModel, mesmo que oculta
                 Long id = (Long) tableModel.getValueAt(selectedRow, 0);
                 Pessoa pessoaParaEditar = controller.listarPessoas().stream()
                         .filter(p -> p.getId().equals(id)).findFirst().orElse(null);
@@ -74,6 +94,7 @@ public class PessoaPanel extends JPanel {
             if (selectedRow >= 0) {
                 int confirm = JOptionPane.showConfirmDialog(this, "Tem certeza que deseja excluir esta pessoa?", "Confirmação", JOptionPane.YES_NO_OPTION);
                 if (confirm == JOptionPane.YES_OPTION) {
+                    // O ID ainda é acessado pela coluna 0 do tableModel, mesmo que oculta
                     Long id = (Long) tableModel.getValueAt(selectedRow, 0);
                     try {
                         controller.excluirPessoa(id);
