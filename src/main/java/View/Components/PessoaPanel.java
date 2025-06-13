@@ -1,6 +1,7 @@
 package View.Components;
 
 import Controller.PessoaController;
+import Model.GenericTableModel;
 import Model.Pessoa;
 
 import javax.swing.*;
@@ -10,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 
-public class PessoaPanel extends JPanel {
+public class PessoaPanel extends JPanel implements PainelGerenciavel {
 
     private final PessoaController controller;
     private JTable table;
@@ -114,7 +115,8 @@ public class PessoaPanel extends JPanel {
         add(buttonPanel, BorderLayout.SOUTH);
     }
 
-    private void refreshTable() {
+    @Override
+    public void refreshTable() {
         List<Pessoa> pessoas = controller.listarPessoas();
         tableModel.setItems(pessoas);
     }

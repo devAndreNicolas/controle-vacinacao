@@ -1,4 +1,4 @@
-package View.Components;
+package Model;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.List;

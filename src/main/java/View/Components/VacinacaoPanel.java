@@ -1,6 +1,7 @@
 package View.Components;
 
 import Controller.VacinacaoController;
+import Model.GenericTableModel;
 import Model.Vacinacao;
 
 import javax.swing.*;
@@ -10,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 
-public class VacinacaoPanel extends JPanel {
+public class VacinacaoPanel extends JPanel implements PainelGerenciavel{
 
     private final VacinacaoController controller;
     private JTable table;
@@ -95,7 +96,8 @@ public class VacinacaoPanel extends JPanel {
         add(buttonPanel, BorderLayout.SOUTH);
     }
 
-    private void refreshTable() {
+    @Override
+    public void refreshTable() {
         List<Vacinacao> vacinacoes = controller.listarVacinacoes();
         tableModel.setItems(vacinacoes);
     }

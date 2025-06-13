@@ -45,7 +45,8 @@ public class Pessoa extends BaseEntity {
         return getNome();
     }
 
-    // Sobrescrita de equals e hashCode para comparação correta em coleções
+    // Sobrescrita do método equals para definir quando dois objetos Pessoa são considerados iguais.
+    // Duas instâncias de Pessoa são consideradas iguais se possuírem o mesmo ID.
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -53,6 +54,7 @@ public class Pessoa extends BaseEntity {
         Pessoa pessoa = (Pessoa) o;
         return Objects.equals(getId(), pessoa.getId());
     }
+
 
     @Override
     public int hashCode() {

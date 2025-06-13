@@ -1,15 +1,14 @@
 package App;
 
 import View.Components.MainFrame;
-import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.themes.FlatMacLightLaf;
 
 import javax.swing.*;
 
 public class App {
     public static void main(String[] args) {
-        // Configura o Look and Feel do FlatLaf (deve ser a primeira coisa a fazer na main)
         try {
-            UIManager.setLookAndFeel(new FlatLightLaf());
+            UIManager.setLookAndFeel(new FlatMacLightLaf());
         } catch (UnsupportedLookAndFeelException e) {
             System.err.println("Falha ao carregar o Look and Feel: " + e.getMessage());
         }

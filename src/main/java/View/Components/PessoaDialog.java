@@ -8,8 +8,6 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.awt.event.KeyAdapter; // Importe KeyAdapter para teste de foco
-import java.awt.event.KeyEvent;    // Importe KeyEvent para teste de foco
 
 
 public class PessoaDialog extends JDialog {
@@ -45,31 +43,6 @@ public class PessoaDialog extends JDialog {
 
         // Tenta garantir que o campo de nome receba o foco após o diálogo ser visível
         SwingUtilities.invokeLater(() -> nomeField.requestFocusInWindow());
-
-        /*
-         * Bloco de código para depuração:
-         * Se o problema persistir, descomente o KeyListener abaixo
-         * para verificar se as teclas estão sendo capturadas,
-         * mesmo que o texto não esteja visível.
-         */
-        // nomeField.addKeyListener(new KeyAdapter() {
-        //     @Override
-        //     public void keyTyped(KeyEvent e) {
-        //         System.out.println("Digitou no nomeField: " + e.getKeyChar());
-        //     }
-        // });
-        // cpfField.addKeyListener(new KeyAdapter() {
-        //     @Override
-        //     public void keyTyped(KeyEvent e) {
-        //         System.out.println("Digitou no cpfField: " + e.getKeyChar());
-        //     }
-        // });
-        // dataNascimentoField.addKeyListener(new KeyAdapter() {
-        //     @Override
-        //     public void keyTyped(KeyEvent e) {
-        //         System.out.println("Digitou no dataNascimentoField: " + e.getKeyChar());
-        //     }
-        // });
     }
 
     private JPanel createFormPanel() {
